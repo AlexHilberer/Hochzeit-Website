@@ -1,0 +1,198 @@
+:root {
+  --wood: #4f331e;
+  --cream: #fbf3e4;
+  --cream-soft: #e9dcc4;
+  --ink: #2a1c10;
+  --gold: #d2b072;
+  --gold-dark: #a8844a;
+  --rose: #e2a9a3;
+  --green: #55704f;
+  --danger: #ffb4a6;
+  --radius: 10px;
+  --font-script: 'Great Vibes', cursive;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  position: relative;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--cream);
+  /* Even dark wash keeps light text readable; the vignette softens the edges. */
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(20, 11, 4, 0.25), rgba(20, 11, 4, 0.6) 100%),
+    var(--wood) url('/images/wood.svg') center top / max(1800px, 100%) auto repeat-y;
+  background-attachment: fixed, scroll;
+}
+
+h1, h2, h3 { margin: 0 0 0.5rem; font-weight: 400; }
+.script { font-family: var(--font-script); font-weight: 400; }
+a { color: var(--gold); }
+
+.decor {
+  position: absolute;
+  width: clamp(170px, 30vw, 400px);
+  pointer-events: none;
+  z-index: 0;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+.decor-top-left { left: 0; top: 0; }
+.decor-top-right { right: 0; top: 0; transform: scaleX(-1); }
+.decor-bottom-left { left: 0; bottom: 0; transform: scaleY(-1); }
+.decor-bottom-right { right: 0; bottom: 0; transform: rotate(180deg); }
+
+/* Continuous watercolor vine framing every page edge. */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    url('/images/vine-horizontal.svg') left top / 480px 100px repeat-x,
+    url('/images/vine-horizontal.svg') left bottom / 480px 100px repeat-x,
+    url('/images/vine-vertical.svg') left top / 100px 480px repeat-y,
+    url('/images/vine-vertical.svg') right top / 100px 480px repeat-y;
+}
+
+.hero, main, footer { position: relative; z-index: 1; }
+
+.hero {
+  text-align: center;
+  /* Side padding keeps the names clear of the corner bouquets. */
+  padding: clamp(6.5rem, 12vw, 8.5rem) clamp(16px, 16vw, 260px) 2.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+.hero .eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  margin: 0 0 1rem;
+  color: var(--gold);
+}
+.hero h1 { font-size: clamp(3.4rem, 12vw, 6.2rem); line-height: 1.2; margin-bottom: 1rem; }
+.hero .rings { width: 74px; margin: 0 auto 1.25rem; display: block; }
+.hero .date { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 600; margin: 0 0 0.4rem; }
+.hero .place { margin: 0; color: var(--cream-soft); }
+.hero.compact { padding-bottom: 1.5rem; }
+.hero.compact h1 { font-size: clamp(3rem, 10vw, 4.6rem); }
+
+.countdown { display: flex; justify-content: center; gap: 1.75rem; margin-top: 2.25rem; }
+.countdown div { min-width: 4.5rem; }
+.countdown strong { display: block; font-family: var(--font-heading); font-size: 2.6rem; font-weight: 600; line-height: 1; }
+.countdown span { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-soft); }
+
+main { max-width: 720px; margin: 0 auto; padding: 0 16px 4rem; }
+
+.section { margin: 3.5rem 0 4rem; }
+.section h2 { font-family: var(--font-script); font-size: 3rem; text-align: center; line-height: 1.25; margin-bottom: 1rem; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+.section > p { text-align: center; color: var(--cream-soft); margin: 0 0 1.25rem; }
+
+.divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0 2.25rem; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.divider::after { background: linear-gradient(90deg, var(--gold), transparent); }
+.divider img { width: 46px; }
+
+.photo { margin: 0 0 2rem; aspect-ratio: 3 / 2; border: 1px solid var(--gold); padding: 8px; }
+.photo-placeholder { display: grid; place-items: center; font-style: italic; color: var(--cream-soft); }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.venues { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.venue { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.venue iframe, .venue address { align-self: stretch; }
+.venue h3 { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 600; color: var(--gold); margin: 0 0 0.6rem; }
+.venue .venue-name { font-weight: 600; margin: 0 0 0.35rem; }
+.venue address { font-style: normal; color: var(--cream-soft); margin-bottom: 0.75rem; flex-grow: 1; }
+.venue iframe { width: 100%; height: 240px; border: 1px solid var(--gold); border-radius: var(--radius); display: block; }
+.venue .button { margin-top: 0.9rem; }
+
+form { display: grid; gap: 1.1rem; }
+label { display: grid; gap: 0.3rem; font-weight: 600; }
+input[type='text'], input[type='password'] {
+  font: inherit;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+}
+input:focus { outline: 3px solid var(--gold); outline-offset: 1px; }
+
+button, .button {
+  font: inherit;
+  font-weight: 600;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 0.7rem 1.9rem;
+  cursor: pointer;
+  background: var(--gold);
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+button:hover, .button:hover { background: #e3c78f; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+button.secondary, .button.secondary { background: rgba(20, 11, 4, 0.35); color: var(--cream); }
+button.secondary:hover, .button.secondary:hover { background: rgba(20, 11, 4, 0.6); }
+button.danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+button.small { padding: 0.3rem 1rem; font-size: 0.9rem; }
+button.link { background: none; border: none; padding: 0.25rem 0.5rem; color: var(--cream-soft); font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
+button.link:hover { background: none; color: var(--cream); }
+
+.error { color: var(--danger); margin: 0; font-weight: 600; text-align: center; }
+.success { color: #c9e3bf; text-align: center; font-weight: 600; margin: 0; }
+.error:empty, .success:empty { display: none; }
+.notice { border: 1px solid var(--gold); border-radius: var(--radius); padding: 0.75rem 1rem; text-align: center; }
+[hidden] { display: none !important; }
+
+.guest-list { display: grid; gap: 0.5rem; }
+.guest { border: none; padding: 1.25rem 0; margin: 0; display: grid; gap: 0.9rem; border-top: 1px solid rgba(210, 176, 114, 0.5); }
+.guest-header { display: flex; justify-content: space-between; align-items: center; }
+.person-number { font-family: var(--font-script); font-size: 2.1rem; line-height: 1; color: var(--gold); }
+.name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.choices { display: flex; flex-wrap: wrap; gap: 0.5rem; border: none; padding: 0; margin: 0; }
+.choices legend { font-weight: 600; padding: 0; margin-bottom: 0.4rem; }
+.choices label { display: block; font-weight: 400; }
+.choices input { position: absolute; opacity: 0; }
+.choices span {
+  display: inline-block;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: rgba(20, 11, 4, 0.35);
+  cursor: pointer;
+}
+.choices input:checked + span { background: var(--cream); color: var(--ink); border-color: var(--cream); font-weight: 600; }
+.choices input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; }
+.topbar { display: flex; justify-content: flex-end; gap: 0.75rem; flex-wrap: wrap; }
+
+footer { text-align: center; padding: 0 16px 6rem; }
+footer img { width: 54px; }
+
+@media (max-width: 760px) {
+  body::before {
+    background:
+      url('/images/vine-horizontal.svg') left top / 288px 60px repeat-x,
+      url('/images/vine-horizontal.svg') left bottom / 288px 60px repeat-x;
+  }
+}
+
+@media (max-width: 520px) {
+  .countdown { gap: 0.9rem; }
+  .countdown strong { font-size: 2rem; }
+  .name-row { grid-template-columns: 1fr; }
+}

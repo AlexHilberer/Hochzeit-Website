@@ -1,0 +1,13 @@
+node_modules/
+.env
+local.settings.json
+
+# Terraform: state and tfvars hold secrets
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/terraform.tfvars
+infra/tfplan
+
+# Local test credentials
+test-zugang.md

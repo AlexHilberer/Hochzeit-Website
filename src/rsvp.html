@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Alexander &amp; Lena – Rückmeldung</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Lora:wght@400;600&display=swap">
+  <link rel="stylesheet" href="/css/theme.css">
+</head>
+<body>
+  <img class="decor decor-top-left" src="/images/flowers-corner.svg" alt="">
+  <img class="decor decor-top-right" src="/images/flowers-corner.svg" alt="">
+  <img class="decor decor-bottom-left" src="/images/flowers-corner.svg" alt="">
+  <img class="decor decor-bottom-right" src="/images/flowers-corner.svg" alt="">
+
+  <header class="hero compact">
+    <p class="eyebrow">Wir heiraten</p>
+    <h1 class="script">Alexander &amp; Lena</h1>
+    <img class="rings" src="/images/rings.svg" alt="">
+    <p class="date">Samstag, 21. August 2027</p>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>Wo &amp; Wann</h2>
+      <div class="divider"><img src="/images/rings.svg" alt=""></div>
+      <div class="venues">
+        <article class="venue">
+          <h3>Trauung</h3>
+          <p class="venue-name">Kirche St. Cosmas und Damianus</p>
+          <address>Kirchenweg 13<br>66679 Losheim am See (Mitlosheim)</address>
+          <iframe title="Karte: Kirche St. Cosmas und Damianus" loading="lazy"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=6.7704%2C49.5314%2C6.7825%2C49.5374&amp;layer=mapnik&amp;marker=49.5344%2C6.77646"></iframe>
+          <a class="button secondary small" target="_blank" rel="noopener"
+            href="https://www.google.com/maps/dir/?api=1&amp;destination=Kirchenweg+13%2C+66679+Losheim+am+See">Route in Google Maps</a>
+        </article>
+        <article class="venue">
+          <h3>Feier</h3>
+          <p class="venue-name">JUNIPRO Hotel &amp; Eventlocation Schinderhannes</p>
+          <address>Trierer Str. 8<br>66709 Weiskirchen</address>
+          <iframe title="Karte: JUNIPRO Hotel Schinderhannes" loading="lazy"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=6.8164%2C49.5524%2C6.8285%2C49.5584&amp;layer=mapnik&amp;marker=49.55543%2C6.82247"></iframe>
+          <a class="button secondary small" target="_blank" rel="noopener"
+            href="https://www.google.com/maps/dir/?api=1&amp;destination=Trierer+Str.+8%2C+66709+Weiskirchen">Route in Google Maps</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="rsvp-card" hidden>
+      <h2>Hallo zusammen!</h2>
+      <p>Tragt bitte ein mit wie vielen Personen ihr kommen wollt.</p>
+      <div class="divider"><img src="/images/rings.svg" alt=""></div>
+      <p class="notice" id="locked-notice" hidden>Die Anmeldefrist ist abgelaufen. Eure Antworten könnt ihr hier noch ansehen.</p>
+      <form id="rsvp-form">
+        <div id="guests" class="guest-list"></div>
+        <div class="actions"><button type="button" class="secondary" id="add-person">+ Person hinzufügen</button></div>
+        <p class="error" id="rsvp-error" role="alert"></p>
+        <p class="success" id="rsvp-success" role="status"></p>
+        <div class="actions"><button type="submit">Antwort speichern</button></div>
+      </form>
+    </section>
+
+    <div class="actions"><button type="button" class="link" id="logout">Abmelden</button></div>
+  </main>
+
+  <template id="guest-template">
+    <fieldset class="guest">
+      <div class="guest-header">
+        <span class="person-number"></span>
+        <button type="button" class="danger small" data-remove>Entfernen</button>
+      </div>
+      <div class="name-row">
+        <label>Vorname
+          <input type="text" name="firstName" maxlength="100" autocomplete="off" required>
+        </label>
+        <label>Nachname
+          <input type="text" name="lastName" maxlength="100" autocomplete="off" required>
+        </label>
+      </div>
+      <fieldset class="choices" data-field="attending">
+        <legend>Dabei?</legend>
+        <label><input type="radio" value="true"><span>Kommt gerne</span></label>
+        <label><input type="radio" value="false"><span>Kann leider nicht</span></label>
+      </fieldset>
+      <fieldset class="choices" data-field="diet" hidden>
+        <legend>Essen</legend>
+        <label><input type="radio" value="alles"><span>Alles</span></label>
+        <label><input type="radio" value="vegetarisch"><span>Vegetarisch</span></label>
+      </fieldset>
+      <label data-field="allergies" hidden>Allergien / Unverträglichkeiten
+        <input type="text" name="allergies" maxlength="300" placeholder="z. B. Nüsse, Laktose">
+      </label>
+    </fieldset>
+  </template>
+
+  <footer><img src="/images/rings.svg" alt=""></footer>
+  <script type="module" src="/js/rsvp.js"></script>
+</body>
+</html>

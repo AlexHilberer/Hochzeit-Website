@@ -1,0 +1,67 @@
+main.wide { max-width: 1100px; }
+.section.narrow { max-width: 420px; margin-left: auto; margin-right: auto; }
+.topbar { margin-bottom: 1.25rem; }
+
+.overview { display: grid; grid-template-columns: 3fr 2fr 2fr; gap: 1.25rem; margin-bottom: 2rem; }
+.stat-group { border: 1px solid rgba(210, 176, 114, 0.6); border-radius: var(--radius); background: rgba(20, 11, 4, 0.45); padding: 1rem 1.25rem 1.25rem; }
+.stat-group h3 { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; color: var(--gold); letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 0.75rem; }
+.tile { text-align: center; }
+.tile strong { display: block; font-family: var(--font-heading); font-size: 2.6rem; line-height: 1.1; }
+.tile span { color: var(--cream-soft); font-size: 0.9rem; }
+.progress { height: 8px; border-radius: 999px; background: rgba(251, 243, 228, 0.2); margin-top: 1rem; overflow: hidden; }
+.progress span { display: block; height: 100%; width: 0; background: var(--gold); border-radius: inherit; transition: width 0.4s; }
+.progress-text { margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--cream-soft); text-align: center; }
+
+/* Data-heavy views stay on a light surface for legibility. */
+.panel { background: var(--cream); color: var(--ink); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.panel h2 { font-family: var(--font-script); font-size: 2.6rem; text-align: center; color: var(--green); }
+.panel .error { color: #9b3a2a; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.panel button.active { background: var(--green); border-color: var(--green); color: #fff; }
+.toolbar input[type='search'] { font: inherit; flex: 1; min-width: 220px; max-width: 360px; padding: 0.45rem 0.75rem; border: 1px solid var(--gold); border-radius: 999px; background: #fff; color: var(--ink); }
+.invitation-cell strong { display: block; }
+.invitation-cell .username, .muted, .date-cell { color: #7a6650; font-size: 0.9rem; }
+.date-cell { white-space: nowrap; }
+.empty { text-align: center; color: #7a6650; font-style: italic; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--cream-soft); }
+th { font-weight: 600; color: #5a4632; white-space: nowrap; }
+td ul { list-style: none; margin: 0; padding: 0; }
+td .row-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.panel button.secondary { background: transparent; color: var(--ink); }
+.panel button.secondary:hover { background: var(--cream-soft); }
+.panel button.danger { color: #9b3a2a; border-color: #9b3a2a; }
+
+.status { display: inline-block; font-size: 0.85rem; padding: 0 0.6rem; border-radius: 999px; margin-left: 0.3rem; white-space: nowrap; }
+td > .status:first-child { margin-left: 0; }
+.status.yes { background: var(--green); color: #fff; }
+.status.no { background: #9b3a2a; color: #fff; }
+.status.open { background: var(--cream-soft); color: #5a4632; }
+
+@media (max-width: 860px) {
+  .overview { grid-template-columns: 1fr; }
+}
+
+dialog {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--cream);
+  color: var(--ink);
+  width: min(520px, calc(100vw - 32px));
+  padding: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+dialog::backdrop { background: rgba(30, 18, 8, 0.6); }
+dialog h2 { font-family: var(--font-script); font-size: 2.4rem; color: var(--green); text-align: center; }
+dialog .error { color: #9b3a2a; }
+dialog .success { color: var(--green); }
+dialog button.secondary { background: transparent; color: var(--ink); }
+
+.credentials { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1rem; }
+.credentials dt { font-weight: 600; }
+.credentials dd { margin: 0; font-family: monospace; font-size: 1.05rem; word-break: break-all; }

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gästeverwaltung</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Great+Vibes&family=Lora:wght@400;600&display=swap">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <img class="decor decor-top-left" src="/images/flowers-corner.svg" alt="">
+  <img class="decor decor-top-right" src="/images/flowers-corner.svg" alt="">
+
+  <header class="hero compact">
+    <p class="eyebrow">Verwaltung</p>
+    <h1 class="script">Unsere Gäste</h1>
+  </header>
+
+  <main class="wide">
+    <section class="section narrow" id="login-section" hidden>
+      <h2>Admin-Anmeldung</h2>
+      <form id="login-form">
+        <label>Passwort
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <p class="error" id="login-error" role="alert"></p>
+        <div class="actions"><button type="submit">Anmelden</button></div>
+      </form>
+    </section>
+
+    <div id="dashboard" hidden>
+      <div class="topbar">
+        <button type="button" id="new-invitation">Neue Einladung</button>
+        <a class="button secondary" href="/api/manage/export.csv">CSV exportieren</a>
+        <button type="button" class="secondary" id="logout">Abmelden</button>
+      </div>
+
+      <section class="overview">
+        <div class="stat-group">
+          <h3>Rückmeldungen</h3>
+          <div class="tiles" id="response-tiles"></div>
+          <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+          <p class="progress-text" id="progress-text"></p>
+        </div>
+        <div class="stat-group">
+          <h3>Personen</h3>
+          <div class="tiles" id="people-tiles"></div>
+        </div>
+        <div class="stat-group">
+          <h3>Essen</h3>
+          <div class="tiles" id="diet-tiles"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="allergies-section" hidden>
+        <h2>Allergien</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Person</th><th>Einladung</th><th>Allergien / Unverträglichkeiten</th></tr></thead>
+            <tbody id="allergies"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Einladungen</h2>
+        <div class="toolbar">
+          <div class="filters" id="filters" role="group" aria-label="Filter"></div>
+          <input type="search" id="search" placeholder="Suchen …" aria-label="Suchen">
+        </div>
+        <p class="error" id="dashboard-error" role="alert"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Einladung</th><th>Status</th><th>Personen</th><th>Erstellt</th><th>Zuletzt geändert</th><th>Aktionen</th></tr>
+            </thead>
+            <tbody id="invitations"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="no-results" hidden>Keine passenden Einladungen.</p>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="invitation-dialog">
+    <form id="invitation-form" method="dialog">
+      <h2 id="invitation-dialog-title"></h2>
+      <label>Name der Einladung
+        <input type="text" name="displayName" placeholder="Familie Müller" maxlength="100" required>
+      </label>
+      <label id="username-field">Benutzername (optional, sonst automatisch)
+        <input type="text" name="username" autocapitalize="none" maxlength="40">
+      </label>
+      <p class="error" id="invitation-error" role="alert"></p>
+      <div class="actions">
+        <button type="submit" value="save">Speichern</button>
+        <button type="button" class="secondary" data-close>Abbrechen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="credentials-dialog">
+    <h2>Zugangsdaten</h2>
+    <p>Das Passwort wird nur jetzt angezeigt. Bitte notieren oder kopieren.</p>
+    <dl class="credentials">
+      <dt>Webseite</dt><dd id="credentials-url"></dd>
+      <dt>Benutzername</dt><dd id="credentials-username"></dd>
+      <dt>Passwort</dt><dd id="credentials-password"></dd>
+    </dl>
+    <p class="success" id="credentials-copied" role="status"></p>
+    <div class="actions">
+      <button type="button" id="copy-credentials">Kopieren</button>
+      <button type="button" class="secondary" data-close>Schließen</button>
+    </div>
+  </dialog>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

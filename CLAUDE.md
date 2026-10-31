@@ -8,18 +8,21 @@ Priority: explicit user instruction > this file > agent defaults.
 
 ## Project
 
-- **Name:**
-- **Purpose:** <one sentence>
-- **Stack:**
-- **Entry point(s):**
+- **Name:** Hochzeit-Website (Azure resources use the generic `name_prefix`, default `rsvptest`)
+- **Purpose:** Wedding RSVP site: guests log in with credentials from their invitation and answer attendance, diet and allergies.
+- **Stack:** Plain HTML/CSS/JS, Azure Functions v4 (Node 20, ESM) as SWA managed API, Cosmos DB for NoSQL, Terraform (azurerm ~> 4). German UI.
+- **Entry point(s):** `src/index.html`, `src/rsvp.html`, `src/admin/index.html`; API `api/src/functions/index.js`. Full plan: `docs/PLAN.md`.
+- **Dependencies:** api: `@azure/functions` (Functions runtime), `@azure/cosmos` (DB SDK). Root dev: `@azure/static-web-apps-cli` (local emulator + deploy), `azure-functions-core-tools` (runs the API locally).
+- **Node:** installed from the official tarball in `~/.local/node20`, symlinked into `~/.local/bin`.
 
 ## Commands
 
-- **Install:**
-- **Dev:**
-- **Test:**
-- **Lint / format:**
-- **Build:**
+- **Install:** `npm install && npm --prefix api install`
+- **Dev:** `bash scripts/write-local-settings.sh` once (uses container `invitations-dev` in the deployed Cosmos), then `npm run dev` → http://localhost:4280
+- **Test:** `npm test` (node:test in `api/test`)
+- **Lint / format:** `terraform -chdir=infra fmt`
+- **Build:** none (static files)
+- **Deploy:** `npm run deploy` (terraform apply + `swa deploy`). Needs `infra/terraform.tfvars` (see `.example`); admin hash via `npm --prefix api run hash-password`.
 
 ---
 
@@ -109,7 +112,16 @@ Bias: caution over speed. For trivial tasks, use judgment.
 
 | Path | Purpose |
 |------|---------|
-|      |         |
+| `src/` | Static frontend (SWA app location); `staticwebapp.config.json` sets CSP and Node 20 runtime |
+| `src/css/theme.css` | Theme: light text directly on darkened wood, no cards (user preference); `admin.css` adds a light panel for tables |
+| `src/favicon.*`, `src/apple-touch-icon.png` | Tab/home-screen icon (gold rings on wood brown); PNG/ICO rendered from `favicon.svg` with ImageMagick (flat colours only, it ignores gradients) |
+| `src/images/` | SVG artwork: `wood.svg` (feTurbulence grain), `rings.svg`; `flowers-corner.svg` + `vine-*.svg` are generated (watercolor filter) |
+| `src/js/` | One module per page (`home`, `rsvp`, `admin`) plus `api.js` fetch helper |
+| `api/src/functions/index.js` | Registers HTTP routes, reads app settings, adapts requests |
+| `api/src/handlers/` | Guest and admin handlers; take a `store` so tests use a fake |
+| `api/src/lib/` | Passwords (scrypt), signed session cookies, invitation validation/summary/CSV, Cosmos store |
+| `infra/` | Terraform: RG, Cosmos (free tier, capped 1000 RU/s), SWA Free, budget alert |
+| `scripts/` | `deploy.sh`, `write-local-settings.sh`, `generate-florals.mjs` (`node scripts/generate-florals.mjs src/images`, seeded so output is stable) |
 
 ## Conventions
 
@@ -125,22 +137,29 @@ Bias: caution over speed. For trivial tasks, use judgment.
 
 ### Known issues
 
-- <issue>. Impact: <impact>. Location: <location>
+- Azure Functions reserves the route prefix `admin`; admin API routes live under `/api/manage/*`.
+- Only one Cosmos DB free-tier account per subscription; free tier can only be set at creation.
+- `wood.svg` is not horizontally seamless: keep `background-size: max(1800px, 100%) auto` so it never repeats sideways (visible seam on wide screens).
+- Venues (rsvp.html, after login): OSM iframes (no consent banner needed) + Google Maps route links; CSP allows `frame-src https://www.openstreetmap.org`.
+- Guests add their own people (Vorname, Nachname, Zusage, Essen alles/vegetarisch, Allergien, max 10); admins only create the invitation login. Invitations carry `createdAt`, `updatedAt` (any change) and `respondedAt`; older records may lack `updatedAt`.
+- Preview pages visually: serve a copy of `src/` on localhost and use `firefox --headless --screenshot` (snap Firefox cannot write to /tmp).
+- Terraform state is local (`infra/terraform.tfstate`, gitignored) and holds secrets. Back it up or move to a remote backend before handing over.
 
 ### Attempted and rejected
 
-- **Approach:** <what was tried>
-  **Result:** <why it failed>
+- **Approach:** Cosmos DB in West Europe (the failed account stays behind in `Failed` state and must be deleted before retrying).
+  **Result:** Rejected by Azure ("high demand"); `cosmos_location` defaults to `germanywestcentral`.
+- **Approach:** SWA built-in auth.
+  **Result:** Free plan only offers GitHub/Entra logins; we use our own scrypt + HMAC cookie login.
 
 ### Workarounds
 
-- **Problem:** <what>
-  **Workaround:** <how>
-  **Location:** `path/to/file`
-  **Remove when:** <condition>
+- None.
 
 ---
 
 ## Open Tasks
 
-- [ ] <task> (reason: <reason>)
+- [ ] Ceremony/party start times and countdown hour (countdown assumes 14:00) in `src/*.html` (reason: times not provided yet)
+- [ ] Add photos to `src/images/` and swap the `.photo-placeholder` (reason: photos come later)
+- [ ] GitHub Actions deploy workflow (reason: deploy currently via `npm run deploy`)

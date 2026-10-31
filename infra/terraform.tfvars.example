@@ -1,0 +1,6 @@
+# Copy to terraform.tfvars (gitignored) and fill in.
+subscription_id       = "00000000-0000-0000-0000-000000000000"
+name_prefix           = "rsvptest"
+admin_password_hash   = "scrypt$..."
+budget_contact_emails = ["you@example.com"]
+# rsvp_deadline       = "2027-05-01T00:00:00+02:00"

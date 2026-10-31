@@ -1,0 +1,14 @@
+{
+  "name": "rsvp-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "npm --prefix api test",
+    "dev": "swa start src --api-location api",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "devDependencies": {
+    "@azure/static-web-apps-cli": "^2.0.2",
+    "azure-functions-core-tools": "^4.0.6610"
+  }
+}
